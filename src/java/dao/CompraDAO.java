@@ -1,0 +1,68 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dao;
+
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import modelo.Compra;
+
+/**
+ *
+ * @author Sary
+ */
+public class CompraDAO {
+
+    private final Connection connection;
+
+    public CompraDAO() throws URISyntaxException, SQLException {
+        connection = dao.Conexion.getConnection();
+    }
+
+    public void addCompra(Compra compra) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into compras(nombre,fecha,cantidad) values (?,?,?)");
+        preparedStatement.setString(1, compra.getNombre());
+        preparedStatement.setDate(2, (java.sql.Date)(compra.getFecha()));
+        preparedStatement.setInt(3, compra.getCantidad());
+        preparedStatement.executeUpdate();
+    }
+
+    public ArrayList<Compra> getAllCompras() throws SQLException {
+        ArrayList<Compra> compras = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from compras");
+        while (rs.next()) {
+            Compra compra = new Compra();
+            compra.setIdCompra(rs.getInt("idCompra"));
+            compra.setNombre(rs.getString("nombre"));
+            compra.setFecha(rs.getDate("fecha"));
+            compra.setCantidad(rs.getInt("cantidad"));
+            compras.add(compra);
+        }
+
+        return compras;
+    }
+
+    public void deleteCompra(int idCompra) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("delete from compras where idCompra=?");
+        preparedStatement.setInt(1, idCompra);
+        preparedStatement.executeUpdate();
+    }
+
+    public void updateCompra(int opcion, Compra compra) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("update compras set nombre=?,fecha=?,cantidad=?" + " where idCompra=?");
+        preparedStatement.setString(1, compra.getNombre());
+        preparedStatement.setDate(2, (java.sql.Date)compra.getFecha());
+        preparedStatement.setInt(3, compra.getCantidad());
+        preparedStatement.setInt(4, opcion);
+        preparedStatement.executeUpdate();
+    }
+
+}
