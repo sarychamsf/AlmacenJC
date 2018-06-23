@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  *
@@ -63,6 +62,17 @@ public class ProductoDAO {
         preparedStatement.setFloat(2, producto.getPrecio());
         preparedStatement.setString(3, opcion);
         preparedStatement.executeUpdate();
+    }
+
+    public Producto getProductoById(String nombre) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from producto where nombre=" + "\"" + nombre + "\"");
+        Producto producto = new Producto();
+        if (rs.next()) {
+            producto.setNombre(rs.getString("nombre"));
+            producto.setPrecio(rs.getFloat("precio"));
+        }
+        return producto;
     }
 
 }

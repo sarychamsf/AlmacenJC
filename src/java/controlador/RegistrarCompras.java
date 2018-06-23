@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -41,6 +38,7 @@ public class RegistrarCompras extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -91,9 +89,15 @@ public class RegistrarCompras extends HttpServlet {
             java.sql.Date fecha = (java.sql.Date.valueOf(fechaS));
 
             String producto = request.getParameter("producto");
-            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            float cantidad = Float.parseFloat(request.getParameter("cantidad"));
 
-            Compra compra = new Compra(producto, (java.sql.Date)fecha, cantidad);
+            ProductoDAO productodao = new ProductoDAO();
+            Producto productoobj = productodao.getProductoById(producto);
+            Float precio = productoobj.getPrecio();
+
+            float total = precio * cantidad;
+
+            Compra compra = new Compra(producto, (java.sql.Date) fecha, cantidad, total);
             CompraDAO compraDAO;
 
             compraDAO = new CompraDAO();

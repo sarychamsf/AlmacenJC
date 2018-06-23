@@ -7,7 +7,6 @@ package modelo;
 
 import java.sql.Date;
 
-
 /**
  *
  * @author Sary
@@ -17,22 +16,25 @@ public class Compra {
     private int idCompra;
     private String nombre;
     private Date fecha;
-    private int cantidad;
+    private float cantidad;
+    private float total;
 
     public Compra() {
     }
 
-    public Compra(String nombre, Date fecha, int cantidad) {
+    public Compra(String nombre, Date fecha, float cantidad, float total) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.cantidad = cantidad;
+        this.total = total;
     }
 
-    public Compra(int idVenta, String nombre, Date fecha, int cantidad) {
+    public Compra(int idVenta, String nombre, Date fecha, float cantidad, float total) {
         this.idCompra = idVenta;
         this.nombre = nombre;
         this.fecha = fecha;
         this.cantidad = cantidad;
+        this.total = total;
     }
 
     public int getIdCompra() {
@@ -59,12 +61,20 @@ public class Compra {
         this.fecha = fecha;
     }
 
-    public int getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(float cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 
 }

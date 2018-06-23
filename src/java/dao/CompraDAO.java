@@ -27,10 +27,11 @@ public class CompraDAO {
     }
 
     public void addCompra(Compra compra) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into compras(nombre,fecha,cantidad) values (?,?,?)");
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into compras(nombre,fecha,cantidad, total) values (?,?,?,?)");
         preparedStatement.setString(1, compra.getNombre());
         preparedStatement.setDate(2, (java.sql.Date)(compra.getFecha()));
-        preparedStatement.setInt(3, compra.getCantidad());
+        preparedStatement.setFloat(3, compra.getCantidad());
+        preparedStatement.setFloat(4, compra.getTotal());
         preparedStatement.executeUpdate();
     }
 
@@ -43,7 +44,8 @@ public class CompraDAO {
             compra.setIdCompra(rs.getInt("idCompra"));
             compra.setNombre(rs.getString("nombre"));
             compra.setFecha(rs.getDate("fecha"));
-            compra.setCantidad(rs.getInt("cantidad"));
+            compra.setCantidad(rs.getFloat("cantidad"));
+            compra.setTotal(rs.getFloat("total"));
             compras.add(compra);
         }
 
@@ -57,11 +59,12 @@ public class CompraDAO {
     }
 
     public void updateCompra(int opcion, Compra compra) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("update compras set nombre=?,fecha=?,cantidad=?" + " where idCompra=?");
+        PreparedStatement preparedStatement = connection.prepareStatement("update compras set nombre=?,fecha=?,cantidad=?,total=?" + " where idCompra=?");
         preparedStatement.setString(1, compra.getNombre());
         preparedStatement.setDate(2, (java.sql.Date)compra.getFecha());
-        preparedStatement.setInt(3, compra.getCantidad());
-        preparedStatement.setInt(4, opcion);
+        preparedStatement.setFloat(3, compra.getCantidad());
+        preparedStatement.setFloat(4, compra.getTotal());
+        preparedStatement.setInt(5, opcion);
         preparedStatement.executeUpdate();
     }
 

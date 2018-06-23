@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import dao.CompraDAO;
+import dao.ProductoDAO;
 import dao.VentaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Compra;
+import modelo.Producto;
 import modelo.Venta;
 
 /**
@@ -38,6 +38,7 @@ public class RegistrarVentas extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -88,9 +89,16 @@ public class RegistrarVentas extends HttpServlet {
             java.sql.Date fecha = (java.sql.Date.valueOf(fechaS));
 
             String producto = request.getParameter("producto");
-            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            float cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            
+            ProductoDAO productodao = new ProductoDAO();
+            Producto productoobj = productodao.getProductoById(producto);
+            Float precio = productoobj.getPrecio();
+            
+            
+            float total = precio*cantidad;
 
-            Venta venta = new Venta(producto, (java.sql.Date) fecha, cantidad);
+            Venta venta = new Venta(producto, (java.sql.Date) fecha, cantidad, total);
             VentaDAO ventaDAO;
 
             ventaDAO = new VentaDAO();

@@ -158,6 +158,7 @@
                                             <th>Fecha</th>
                                             <th>Producto</th>
                                             <th>Cantidad</th>
+                                            <th>Costo Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -176,15 +177,17 @@
 
                                                 String nombre = (compras.get(i)).getNombre();
                                                 
-                                                int cantidad = (compras.get(i)).getCantidad();
-                                            
+                                                float cantidad = (compras.get(i)).getCantidad();
+                                                float total = (compras.get(i)).getTotal();
+
                                         %>
 
                                         <tr class="odd gradeA">
                                             <td><%=idCompra%></td>
                                             <td><%=fecha%></td>
                                             <td><%=nombre%></td>
-                                            <td><%=cantidad%></td>                                        
+                                            <td><%=cantidad%></td>  
+                                            <td><%=total%></td> 
                                         </tr>
 
 

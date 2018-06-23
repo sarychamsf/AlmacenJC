@@ -27,10 +27,11 @@ public class VentaDAO {
     }
 
     public void addVenta(Venta venta) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into ventas(nombre,fecha,cantidad) values (?,?,?)");
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into ventas(nombre,fecha,cantidad,total) values (?,?,?,?)");
         preparedStatement.setString(1, venta.getNombre());
         preparedStatement.setDate(2, (java.sql.Date)(venta.getFecha()));
-        preparedStatement.setInt(3, venta.getCantidad());
+        preparedStatement.setFloat(3, venta.getCantidad());
+        preparedStatement.setFloat(4, venta.getTotal());
         preparedStatement.executeUpdate();
     }
 
@@ -43,7 +44,8 @@ public class VentaDAO {
             venta.setIdVenta(rs.getInt("idVenta"));
             venta.setNombre(rs.getString("nombre"));
             venta.setFecha(rs.getDate("fecha"));
-            venta.setCantidad(rs.getInt("cantidad"));
+            venta.setCantidad(rs.getFloat("cantidad"));
+            venta.setTotal(rs.getFloat("total"));
             ventas.add(venta);
         }
 
@@ -57,11 +59,12 @@ public class VentaDAO {
     }
 
     public void updateVenta(int opcion, Venta venta) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("update ventas set nombre=?,fecha=?,cantidad=?" + " where idVenta=?");
+        PreparedStatement preparedStatement = connection.prepareStatement("update ventas set nombre=?,fecha=?,cantidad=?,total=?" + " where idVenta=?");
         preparedStatement.setString(1, venta.getNombre());
         preparedStatement.setDate(2, (java.sql.Date)venta.getFecha());
-        preparedStatement.setInt(3, venta.getCantidad());
-        preparedStatement.setInt(4, opcion);
+        preparedStatement.setFloat(3, venta.getCantidad());
+        preparedStatement.setFloat(4, venta.getTotal());
+        preparedStatement.setInt(5, opcion);
         preparedStatement.executeUpdate();
     }
 
