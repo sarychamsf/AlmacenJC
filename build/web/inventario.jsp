@@ -4,6 +4,11 @@
     Author     : Sary
 --%>
 
+<%@page import="dao.StockDAO"%>
+<%@page import="dao.ProductoDAO"%>
+<%@page import="modelo.Stock"%>
+<%@page import="modelo.Producto"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -155,14 +160,34 @@
                                     <tbody>
 
 
+                                        <% 
+                                            
+                                            StockDAO stockdao = new StockDAO();
+                                            ArrayList<Stock> stocks = stockdao.getAllStock();
+
+                                            for (int i = 0; i < stocks.size(); i++) {
+                                                
+                                                Stock stock = stocks.get(i);
+                                                String nombre = stock.getNombre();
+                                                float cantidad = stock.getCantidad();
+                                                
+                                                ProductoDAO prodao = new ProductoDAO();
+                                                Producto producto = prodao.getProductoById(nombre);
+                                                        
+                                                float precio = producto.getPrecio(); 
+                                           
+                                        %>
+
 
                                         <tr class="odd gradeA">
-                                            <td>Comida</td>
-                                            <td>1000</td>
-                                            <td>5</td>
+                                            <td><%=nombre%></td>
+                                            <td><%=precio%></td>
+                                            <td><%=cantidad%></td>
                                         </tr>
 
-
+                                        <%
+                                            }
+                                        %>
 
                                     </tbody>
                                 </table>

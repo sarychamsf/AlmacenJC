@@ -12,20 +12,20 @@ package modelo;
 public class Stock {
     
     private int idStock;
-    private int idProducto;
-    private int cantidad;
+    private String nombre;
+    private float cantidad;
 
     public Stock() {
     }
 
-    public Stock(int idProducto, int cantidad) {
-        this.idProducto = idProducto;
+    public Stock(String nombre, float cantidad) {
+        this.nombre = nombre;
         this.cantidad = cantidad;
     }
 
-    public Stock(int idStock, int idProducto, int cantidad) {
+    public Stock(int idStock, String nombre, float cantidad) {
         this.idStock = idStock;
-        this.idProducto = idProducto;
+        this.nombre = nombre;
         this.cantidad = cantidad;
     }
 
@@ -37,19 +37,19 @@ public class Stock {
         this.idStock = idStock;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(float cantidad) {
         this.cantidad = cantidad;
     }
     

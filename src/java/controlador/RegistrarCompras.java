@@ -7,6 +7,7 @@ package controlador;
 
 import dao.CompraDAO;
 import dao.ProductoDAO;
+import dao.StockDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Compra;
 import modelo.Producto;
+import modelo.Stock;
 
 /**
  *
@@ -102,6 +104,15 @@ public class RegistrarCompras extends HttpServlet {
 
             compraDAO = new CompraDAO();
             compraDAO.addCompra(compra);
+
+            StockDAO stockdao = new StockDAO();
+            Stock stock = stockdao.getStockByProductName(producto);
+
+            float cantidadActual = stock.getCantidad();
+            float cantidadNueva = cantidad + cantidadActual;
+            stock.setCantidad(cantidadNueva);
+
+            stockdao.updateStock(producto, stock);
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);

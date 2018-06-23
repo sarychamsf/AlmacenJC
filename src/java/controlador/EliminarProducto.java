@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Producto;
 
 /**
  *
@@ -89,7 +88,7 @@ public class EliminarProducto extends HttpServlet {
 
             productoDAO = new ProductoDAO();
             productoDAO.deleteProducto(opcion);
-            ;
+            
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
         }

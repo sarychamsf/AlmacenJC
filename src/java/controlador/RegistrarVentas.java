@@ -6,6 +6,7 @@
 package controlador;
 
 import dao.ProductoDAO;
+import dao.StockDAO;
 import dao.VentaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Producto;
+import modelo.Stock;
 import modelo.Venta;
 
 /**
@@ -90,19 +92,27 @@ public class RegistrarVentas extends HttpServlet {
 
             String producto = request.getParameter("producto");
             float cantidad = Integer.parseInt(request.getParameter("cantidad"));
-            
+
             ProductoDAO productodao = new ProductoDAO();
             Producto productoobj = productodao.getProductoById(producto);
             Float precio = productoobj.getPrecio();
-            
-            
-            float total = precio*cantidad;
+
+            float total = precio * cantidad;
 
             Venta venta = new Venta(producto, (java.sql.Date) fecha, cantidad, total);
             VentaDAO ventaDAO;
 
             ventaDAO = new VentaDAO();
             ventaDAO.addVenta(venta);
+
+            StockDAO stockdao = new StockDAO();
+            Stock stock = stockdao.getStockByProductName(producto);
+
+            float cantidadActual = stock.getCantidad();
+            float cantidadNueva = cantidadActual - cantidad;
+            stock.setCantidad(cantidadNueva);
+
+            stockdao.updateStock(producto, stock);
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
