@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Registrar Compras</title>
+        <title>Registrar Gastos</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -143,7 +143,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Registrar Compras</h1>
+                            <h1 class="page-header">Registrar Gastos</h1>
                         </div>
                         <!-- /.col-lg-12 -->
 
@@ -152,20 +152,20 @@
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Registra la compra de nueva mercancía:
+                                        Registra los productos vendidos:
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <form role="form" action="RegistrarCompras" method="POST">
+                                                <form role="form" action="RegistrarVentas" method="POST">
                                                     <div class="form-group">
-                                                        <label>Fecha de Compra</label>
+                                                        <label>Fecha de Venta</label>
                                                         <input type="date" class="form-control" name="fecha" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Producto</label>
                                                         <select class="form-control" name="producto">
-
+                                                            
                                                             <% 
                                                                 ProductoDAO prodao = new ProductoDAO();
                                                                 ArrayList<Producto> productos = prodao.getAllProductos();
@@ -173,13 +173,13 @@
                                                                 for(int i = 0; i<productos.size(); i++) {
                                                                 String opcion = (productos.get(i)).getNombre();
                                                             %>
-
+                                                            
                                                             <option> <%=opcion %> </option>
-
+                                                            
                                                             <%
                                                                 }
                                                             %>
-
+  
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
@@ -202,6 +202,7 @@
                             </div>
                             <!-- /.col-lg-12 -->
                         </div>
+
 
 
                     </div>

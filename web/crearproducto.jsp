@@ -52,7 +52,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="inventario.jsp">Inventario</a>
+                    <a class="navbar-brand" href="inventario.jsp">Almacén</a>
                 </div>
                 <!-- /.navbar-header -->
 
@@ -76,7 +76,10 @@
                         <ul class="nav" id="side-menu">
 
                             <li>
-                                <a href="inventario.jsp"><i class="fa fa-files-o fa-fw"></i> Inventario</a>
+                                <a href="inventario.jsp"><i class="fa fa-archive fa-fw"></i> Inventario</a>
+                            </li>
+                            <li>
+                                <a href="registrodiario.jsp"><i class="fa fa-money fa-fw"></i> Registro Diario</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-edit fa-fw"></i> Productos<span class="fa arrow"></span></a>
@@ -91,7 +94,6 @@
                                         <a href="eliminarproducto.jsp">Eliminar</a>
                                     </li>
                                 </ul>
-                                <!-- /.nav-second-level -->
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-table fa-fw"></i> Compras<span class="fa arrow"></span></a>
@@ -115,11 +117,22 @@
                                     </li>
                             </li>
                         </ul>
+                        <li>
+                            <a href="#"><i class="fa fa-minus-circle fa-fw"></i> Gastos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="registrargastos.jsp">Registrar Gastos</a>
+                                </li>
+                                <li>
+                                    <a href="vergastos.jsp">Ver Gastos</a>
+                                </li>
+                        </li>
                         </ul>
+
                     </div>
                     <!-- /.sidebar-collapse -->
                 </div>
-                <!-- /.navbar-static-side -->
+
             </nav>
 
             <!-- Page Content -->

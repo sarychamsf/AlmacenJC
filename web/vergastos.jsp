@@ -4,9 +4,12 @@
     Author     : Sary
 --%>
 
-<%@page import="modelo.Producto"%>
+<%@page import="dao.VentaDAO"%>
+<%@page import="modelo.Venta"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.ProductoDAO"%>
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,13 +22,19 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Registrar Compras</title>
+        <title>Ver Gastos</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- MetisMenu CSS -->
         <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- DataTables CSS -->
+        <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+        <!-- DataTables Responsive CSS -->
+        <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="dist/css/sb-admin-2.css" rel="stylesheet">
@@ -39,6 +48,7 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+
 
     </head>
 
@@ -140,74 +150,78 @@
 
             <!-- Page Content -->
             <div id="page-wrapper">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h1 class="page-header">Registrar Compras</h1>
-                        </div>
-                        <!-- /.col-lg-12 -->
-
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        Registra la compra de nueva mercancía:
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <form role="form" action="RegistrarCompras" method="POST">
-                                                    <div class="form-group">
-                                                        <label>Fecha de Compra</label>
-                                                        <input type="date" class="form-control" name="fecha" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Producto</label>
-                                                        <select class="form-control" name="producto">
-
-                                                            <% 
-                                                                ProductoDAO prodao = new ProductoDAO();
-                                                                ArrayList<Producto> productos = prodao.getAllProductos();
-                                                            
-                                                                for(int i = 0; i<productos.size(); i++) {
-                                                                String opcion = (productos.get(i)).getNombre();
-                                                            %>
-
-                                                            <option> <%=opcion %> </option>
-
-                                                            <%
-                                                                }
-                                                            %>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Cantidad</label>
-                                                        <input class="form-control" name="cantidad" placeholder="Cantidad..." required>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-success">Registrar</button>
-                                                    <a href="inventario.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
-
-                                                </form>
-                                            </div>
-                                            <!-- /.col-lg-6 (nested) -->
-                                        </div>
-                                        <!-- /.row (nested) -->
-                                    </div>
-                                    <!-- /.panel-body -->
-                                </div>
-                                <!-- /.panel -->
-                            </div>
-                            <!-- /.col-lg-12 -->
-                        </div>
-
-
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Ver Gastos</h1>
                     </div>
-                    <!-- /.row -->
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Ventas Realizadas:
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Código Venta</th>
+                                            <th>Fecha</th>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <% 
+                                            VentaDAO compradao = new VentaDAO();
+                                            ArrayList<Venta> compras = compradao.getAllVentas();
+                                                            
+                                            for(int i = 0; i<compras.size(); i++) {
+                                                
+                                                int idVenta = (compras.get(i)).getIdVenta();
+                                                
+                                                Date date = (compras.get(i)).getFecha(); 
+                                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                                String fecha = df.format(date);
+
+                                                String nombre = (compras.get(i)).getNombre();
+                                                
+                                                float cantidad = (compras.get(i)).getCantidad();
+                                                float total = (compras.get(i)).getTotal();                                            
+
+                                        %>
+
+                                        <tr class="odd gradeA">
+                                            <td><%=idVenta%></td>
+                                            <td><%=fecha%></td>
+                                            <td><%=nombre%></td>
+                                            <td><%=cantidad%></td>                                        
+                                            <td><%=total%></td>                                        
+                                        </tr>
+
+
+                                        <%
+                                            }
+                                        %>
+
+                                    </tbody>
+                                </table>
+                                <!-- /.table-responsive -->
+
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
             </div>
             <!-- /#page-wrapper -->
 
@@ -223,8 +237,22 @@
         <!-- Metis Menu Plugin JavaScript -->
         <script src="vendor/metisMenu/metisMenu.min.js"></script>
 
+        <!-- DataTables JavaScript -->
+        <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+
         <!-- Custom Theme JavaScript -->
         <script src="dist/js/sb-admin-2.js"></script>
+
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
 
     </body>
 
