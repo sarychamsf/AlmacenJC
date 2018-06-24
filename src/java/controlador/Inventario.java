@@ -5,12 +5,21 @@
  */
 package controlador;
 
+import dao.StockDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Producto;
+import modelo.Stock;
 
 /**
  *
@@ -31,18 +40,7 @@ public class Inventario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Inventario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Inventario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,9 +70,26 @@ public class Inventario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
-        
+        request.setCharacterEncoding("UTF-8");
+
+        try {
+
+            response.sendRedirect("inventario.jsp");
+            processRequest(request, response);
+
+            String opcion = request.getParameter("opcion");
+            Float cantidad = Float.parseFloat(request.getParameter("cantidad"));
+
+            StockDAO stockdao = new StockDAO();
+            Stock stock = stockdao.getStockByProductName(opcion);
+            stock.setCantidad(cantidad);
+
+            stockdao.updateStock(opcion, stock);
+
+        } catch (URISyntaxException | SQLException ex) {
+            Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**

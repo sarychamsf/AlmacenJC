@@ -9,6 +9,8 @@
 <%@page import="modelo.Stock"%>
 <%@page import="modelo.Producto"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Locale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,6 +151,7 @@
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
+
                                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
@@ -159,30 +162,37 @@
                                     </thead>
                                     <tbody>
 
-
                                         <% 
                                             
                                             StockDAO stockdao = new StockDAO();
                                             ArrayList<Stock> stocks = stockdao.getAllStock();
 
+                                            Locale.setDefault(Locale.US);
+                                            DecimalFormat num = new DecimalFormat("#,###.00");                                            
+                                            
                                             for (int i = 0; i < stocks.size(); i++) {
                                                 
                                                 Stock stock = stocks.get(i);
                                                 String nombre = stock.getNombre();
                                                 float cantidad = stock.getCantidad();
+                                                String cantidads = num.format(cantidad);
                                                 
                                                 ProductoDAO prodao = new ProductoDAO();
                                                 Producto producto = prodao.getProductoById(nombre);
                                                         
                                                 float precio = producto.getPrecio(); 
+                                                String precios = num.format(precio);
                                            
                                         %>
 
 
                                         <tr class="odd gradeA">
-                                            <td><%=nombre%></td>
-                                            <td><%=precio%></td>
-                                            <td><%=cantidad%></td>
+                                            <td style="padding-top: 15px;"><%=nombre%></td>
+                                            <td style="padding-top: 15px;"><%=precios%></td>
+                                            <td style="padding-top: 15px;">
+                                                <%=cantidads%>
+
+                                            </td>
                                         </tr>
 
                                         <%
@@ -192,6 +202,58 @@
                                     </tbody>
                                 </table>
                                 <!-- /.table-responsive -->
+
+                                <br>
+
+                                <button id="modificar" onclick="modificar()" class="btn btn-success">Modificar Inventario</button>
+
+                                <br>
+
+                                <div id="seccionmod" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Modificar Inventario:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="Inventario" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Producto a Modificar</label>
+                                                        <select class="form-control" name="opcion">
+
+                                                            <% 
+                                                                ProductoDAO prodao = new ProductoDAO();
+                                                                ArrayList<Producto> productos = prodao.getAllProductos();
+                                                            
+                                                                for(int i = 0; i<productos.size(); i++) {
+                                                                String opcion = (productos.get(i)).getNombre();                                                                
+
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Nueva Cantidad</label>
+                                                        <input class="form-control" name="cantidad" placeholder="Nueva cantidad...">
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Modificar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                             <!-- /.panel-body -->
@@ -227,11 +289,25 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTables-example').DataTable({
+                                                                responsive: true
+                                                            });
+                                                        });
+        </script>
+
+        <script>
+            function cancelar() {
+                location.reload();
+            }
+        </script>
+
+        <script>
+            function modificar() {
+                document.getElementById('seccionmod').style.display = 'block';
+                document.getElementById('modificar').style.display = 'none';
+                document.getElementById('cancelar').style.display = 'none';
+            }
         </script>
 
     </body>

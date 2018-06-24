@@ -5,12 +5,15 @@
  */
 package modelo;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 /**
  *
  * @author Sary
  */
 public class Stock {
-    
+
     private int idStock;
     private String nombre;
     private float cantidad;
@@ -52,5 +55,11 @@ public class Stock {
     public void setCantidad(float cantidad) {
         this.cantidad = cantidad;
     }
-    
+
+    public static String convertir(float val) {
+        Locale.setDefault(Locale.US);
+        DecimalFormat num = new DecimalFormat("#,###.00");
+        return num.format(val);
+    }
+
 }
