@@ -10,6 +10,10 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="modelo.Producto"%>
+<%@page import="dao.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -180,18 +184,23 @@
                                             CompraDAO compradao = new CompraDAO();
                                             ArrayList<Compra> compras = compradao.getAllCompras();
                                                             
+                                            Locale.setDefault(Locale.US);
+                                            DecimalFormat num = new DecimalFormat("#,###.00");  
+                                            
                                             for(int i = 0; i<compras.size(); i++) {
                                                 
                                                 int idCompra = (compras.get(i)).getIdCompra();
                                                 
                                                 Date date = (compras.get(i)).getFecha(); 
-                                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                                 String fecha = df.format(date);
 
                                                 String nombre = (compras.get(i)).getNombre();
                                                 
                                                 float cantidad = (compras.get(i)).getCantidad();
+                                                String cantidads = num.format(cantidad);
                                                 float total = (compras.get(i)).getTotal();
+                                                String totals = num.format(total);
 
                                         %>
 
@@ -199,8 +208,8 @@
                                             <td><%=idCompra%></td>
                                             <td><%=fecha%></td>
                                             <td><%=nombre%></td>
-                                            <td><%=cantidad%></td>  
-                                            <td><%=total%></td> 
+                                            <td><%=cantidads%></td>  
+                                            <td><%=totals%></td> 
                                         </tr>
 
 
@@ -211,6 +220,132 @@
                                     </tbody>
                                 </table>
                                 <!-- /.table-responsive -->
+
+
+                                <br>
+
+                                <div id="botones">
+                                    <button id="modificar" onclick="modificar()" class="btn btn-success">Modificar Compra</button>
+                                    <button id="eliminar" onclick="eliminar()" class="btn btn-success">Eliminar Compra</button>
+                                </div>
+
+                                <br>
+
+                                <!--Modificar-->
+
+                                <div id="seccionmod" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Modificar Compra:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="ModificarCompras" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Código de compra a modificar</label>
+
+                                                        <select class="form-control" name="opcion">
+
+                                                            <%  
+                                                                for(int i = 0; i<compras.size(); i++) {
+                                                                    int opcion = (compras.get(i)).getIdCompra();                                                                
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Fecha (*)</label>
+                                                        <input type="date" class="form-control" name="fecha" placeholder="Producto...">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Producto (*)</label>
+                                                        <select class="form-control" name="producto" required>
+
+                                                            <% 
+                                                                ProductoDAO prodao = new ProductoDAO();
+                                                                ArrayList<Producto> productos = prodao.getAllProductos();
+                                                            
+                                                                for(int i = 0; i<productos.size(); i++) {
+                                                                String opcion = (productos.get(i)).getNombre();
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Nueva Cantidad (*)</label>
+                                                        <input class="form-control" name="cantidad" placeholder="Nueva cantidad...">
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Modificar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--Eliminar-->
+
+                                <div id="seccionelim" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Eliminar Compra:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="EliminarCompra" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Código de compra a eliminar</label>
+
+                                                        <select class="form-control" name="opcion">
+
+                                                            <%  
+                                                                for(int i = 0; i<compras.size(); i++) {
+                                                                    int opcion = (compras.get(i)).getIdCompra();                                                                
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Eliminar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>                           
+
 
                             </div>
                             <!-- /.panel-body -->
@@ -246,12 +381,36 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTables-example').DataTable({
+                                                                responsive: true
+                                                            });
+                                                        });
         </script>
+
+        <script>
+            function cancelar() {
+                //location.reload();
+                document.getElementById('seccionmod').style.display = 'none';
+                document.getElementById('seccionelim').style.display = 'none';
+                document.getElementById('botones').style.display = 'block';
+            }
+        </script>
+
+        <script>
+            function modificar() {
+                document.getElementById('seccionmod').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
+        </script>
+
+        <script>
+            function eliminar() {
+                document.getElementById('seccionelim').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
+        </script>
+
     </body>
 
 </html>

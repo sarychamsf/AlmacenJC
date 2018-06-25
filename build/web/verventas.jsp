@@ -10,6 +10,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Locale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -181,18 +183,23 @@
                                             VentaDAO compradao = new VentaDAO();
                                             ArrayList<Venta> compras = compradao.getAllVentas();
                                                             
+                                            Locale.setDefault(Locale.US);
+                                            DecimalFormat num = new DecimalFormat("#,###.00");  
+                                            
                                             for(int i = 0; i<compras.size(); i++) {
                                                 
                                                 int idVenta = (compras.get(i)).getIdVenta();
                                                 
                                                 Date date = (compras.get(i)).getFecha(); 
-                                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                                 String fecha = df.format(date);
 
                                                 String nombre = (compras.get(i)).getNombre();
                                                 
                                                 float cantidad = (compras.get(i)).getCantidad();
-                                                float total = (compras.get(i)).getTotal();                                            
+                                                String cantidads = num.format(cantidad);
+                                                float total = (compras.get(i)).getTotal();
+                                                String totals = num.format(total);
 
                                         %>
 
@@ -200,8 +207,8 @@
                                             <td><%=idVenta%></td>
                                             <td><%=fecha%></td>
                                             <td><%=nombre%></td>
-                                            <td><%=cantidad%></td>                                        
-                                            <td><%=total%></td>                                        
+                                            <td><%=cantidads%></td>                                        
+                                            <td><%=totals%></td>                                        
                                         </tr>
 
 

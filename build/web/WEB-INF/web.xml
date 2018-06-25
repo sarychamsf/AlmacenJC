@@ -40,6 +40,14 @@
         <servlet-name>RegistrarGastos</servlet-name>
         <servlet-class>controlador.RegistrarGastos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModificarCompras</servlet-name>
+        <servlet-class>controlador.ModificarCompras</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarCompra</servlet-name>
+        <servlet-class>controlador.EliminarCompra</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarCompras</servlet-name>
         <url-pattern>/RegistrarCompras</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>RegistrarGastos</servlet-name>
         <url-pattern>/RegistrarGastos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarCompras</servlet-name>
+        <url-pattern>/ModificarCompras</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarCompra</servlet-name>
+        <url-pattern>/EliminarCompra</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

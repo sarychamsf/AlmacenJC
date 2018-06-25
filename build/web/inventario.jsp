@@ -311,7 +311,10 @@
 
         <script>
             function cancelar() {
-                location.reload();
+                //location.reload();
+                document.getElementById('seccionmod').style.display = 'none';
+                document.getElementById('modificar').style.display = 'block';
+                document.getElementById('cancelar').style.display = 'block';
             }
         </script>
 

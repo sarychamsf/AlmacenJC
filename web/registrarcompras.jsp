@@ -5,8 +5,8 @@
 --%>
 
 <%@page import="modelo.Producto"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="dao.ProductoDAO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -164,7 +164,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Producto</label>
-                                                        <select class="form-control" name="producto">
+                                                        <select class="form-control" name="producto" required>
 
                                                             <% 
                                                                 ProductoDAO prodao = new ProductoDAO();

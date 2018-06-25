@@ -5,9 +5,9 @@
  */
 package controlador;
 
+import dao.CompraDAO;
 import dao.ProductoDAO;
 import dao.StockDAO;
-import dao.VentaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
@@ -18,15 +18,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Compra;
 import modelo.Producto;
 import modelo.Stock;
-import modelo.Venta;
 
 /**
  *
  * @author Sary
  */
-public class RegistrarVentas extends HttpServlet {
+public class ModificarCompras extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,18 +41,6 @@ public class RegistrarVentas extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Ventas</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Ventas at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,39 +69,45 @@ public class RegistrarVentas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
 
         try {
 
-            response.sendRedirect("registrarventas.jsp");
+            response.sendRedirect("vercompras.jsp");
             processRequest(request, response);
+
+            int opcion = Integer.parseInt(request.getParameter("opcion"));
 
             String fechaS = request.getParameter("fecha");
             java.sql.Date fecha = (java.sql.Date.valueOf(fechaS));
 
-            String producto = request.getParameter("producto");
-            float cantidad = Float.parseFloat(request.getParameter("cantidad"));
+            String nombre = request.getParameter("producto");
+            Float cantidadNueva = Float.parseFloat(request.getParameter("cantidad"));
 
-            ProductoDAO productodao = new ProductoDAO();
-            Producto productoobj = productodao.getProductoById(producto);
-            Float precio = productoobj.getPrecio();
+            ProductoDAO prodao = new ProductoDAO();
+            Producto producto = prodao.getProductoById(nombre);
+            float total = (producto.getPrecio())*cantidadNueva;
 
-            float total = precio * cantidad;
+            CompraDAO compradao = new CompraDAO();
+            Compra compra = new Compra(nombre, fecha, cantidadNueva, total);
+            Compra compraAnterior = compradao.getCompraById(opcion);
+            float cv = compraAnterior.getCantidad();
+            
+            compradao.updateCompra(opcion, compra);
 
-            Venta venta = new Venta(producto, (java.sql.Date) fecha, cantidad, total);
-            VentaDAO ventaDAO;
-
-            ventaDAO = new VentaDAO();
-            ventaDAO.addVenta(venta);
-
+            // MODIFICAR INVENTARIO
+            
             StockDAO stockdao = new StockDAO();
-            Stock stock = stockdao.getStockByProductName(producto);
-
-            float cantidadActual = stock.getCantidad();
-            float cantidadNueva = cantidadActual - cantidad;
-            stock.setCantidad(cantidadNueva);
-
-            stockdao.updateStock(producto, stock);
-
+            Stock stock = stockdao.getStockByProductName(nombre);
+            
+            float iv = stock.getCantidad();
+            
+            float dif = iv - cv;
+            float in = dif + cantidadNueva;
+            
+            Stock stockNuevo = new Stock(nombre, in);
+            stockdao.updateStock(nombre, stockNuevo);                        
+            
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -68,4 +68,18 @@ public class CompraDAO {
         preparedStatement.executeUpdate();
     }
 
+        public Compra getCompraById(int idCompra) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from compras where idCompra=" + "\"" + idCompra + "\"");
+        Compra compra = new Compra();
+        if (rs.next()) {
+            compra.setIdCompra(rs.getInt("idCompra"));
+            compra.setNombre(rs.getString("nombre"));
+            compra.setFecha(rs.getDate("fecha"));
+            compra.setCantidad(rs.getFloat("cantidad"));
+            compra.setTotal(rs.getFloat("total"));
+        }
+        return compra;
+    }
+    
 }

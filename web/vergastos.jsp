@@ -4,12 +4,14 @@
     Author     : Sary
 --%>
 
-<%@page import="dao.VentaDAO"%>
-<%@page import="modelo.Venta"%>
+<%@page import="dao.GastoDAO"%>
+<%@page import="modelo.Gasto"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Locale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -168,40 +170,41 @@
                                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>Código Venta</th>
+                                            <th>Código Gasto</th>
                                             <th>Fecha</th>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio Total</th>
+                                            <th>Gasto</th>
+                                            <th>Monto</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <% 
-                                            VentaDAO compradao = new VentaDAO();
-                                            ArrayList<Venta> compras = compradao.getAllVentas();
+                                            GastoDAO gastodao  = new GastoDAO();
+                                            ArrayList<Gasto> gastos = gastodao.getAllGastos();
+                                            
+                                            Locale.setDefault(Locale.US);
+                                            DecimalFormat num = new DecimalFormat("#,###.00");     
                                                             
-                                            for(int i = 0; i<compras.size(); i++) {
+                                            for(int i = 0; i<gastos.size(); i++) {
                                                 
-                                                int idVenta = (compras.get(i)).getIdVenta();
+                                                int idGasto = (gastos.get(i)).getIdGasto();
                                                 
-                                                Date date = (compras.get(i)).getFecha(); 
-                                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                                Date date = (gastos.get(i)).getFecha(); 
+                                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                                 String fecha = df.format(date);
 
-                                                String nombre = (compras.get(i)).getNombre();
+                                                String nombre = (gastos.get(i)).getNombre();
                                                 
-                                                float cantidad = (compras.get(i)).getCantidad();
-                                                float total = (compras.get(i)).getTotal();                                            
+                                                float monto = (gastos.get(i)).getMonto();  
+                                                String montos = num.format(monto);
 
                                         %>
 
                                         <tr class="odd gradeA">
-                                            <td><%=idVenta%></td>
+                                            <td><%=idGasto%></td>
                                             <td><%=fecha%></td>
                                             <td><%=nombre%></td>
-                                            <td><%=cantidad%></td>                                        
-                                            <td><%=total%></td>                                        
+                                            <td><%=montos%></td>                                                                              
                                         </tr>
 
 

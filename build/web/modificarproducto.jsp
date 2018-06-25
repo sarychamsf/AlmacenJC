@@ -159,7 +159,7 @@
                                                 <form role="form" action="ModificarProducto" method="POST">
                                                     <div class="form-group">
                                                         <label>Producto a Modificar</label>
-                                                        <select class="form-control" name="opcion">
+                                                        <select class="form-control" name="opcion" required>
 
                                                             <% 
                                                                 ProductoDAO prodao = new ProductoDAO();
@@ -179,12 +179,12 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Nuevo Nombre del Producto</label>
-                                                        <input class="form-control" name="nombre" placeholder="Nuevo nombre...">
+                                                        <label>Nuevo Nombre del Producto (*)</label>
+                                                        <input class="form-control" name="nombre" placeholder="Nuevo nombre..." required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Nuevo Precio del Producto</label>
-                                                        <input class="form-control" name="precio" placeholder="Nuevo precio...">
+                                                        <label>Nuevo Precio del Producto (*)</label>
+                                                        <input class="form-control" name="precio" placeholder="Nuevo precio..." required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success">Modificar</button>

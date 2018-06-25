@@ -4,9 +4,9 @@
     Author     : Sary
 --%>
 
-<%@page import="modelo.Producto"%>
+<%@page import="modelo.Gasto"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.ProductoDAO"%>
+<%@page import="dao.GastoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -152,39 +152,23 @@
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Registra los productos vendidos:
+                                        Registra los gastos realizados:
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <form role="form" action="RegistrarVentas" method="POST">
+                                                <form role="form" action="RegistrarGastos" method="POST">
                                                     <div class="form-group">
-                                                        <label>Fecha de Venta</label>
+                                                        <label>Fecha en la que se realizó el gasto</label>
                                                         <input type="date" class="form-control" name="fecha" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Producto</label>
-                                                        <select class="form-control" name="producto">
-                                                            
-                                                            <% 
-                                                                ProductoDAO prodao = new ProductoDAO();
-                                                                ArrayList<Producto> productos = prodao.getAllProductos();
-                                                            
-                                                                for(int i = 0; i<productos.size(); i++) {
-                                                                String opcion = (productos.get(i)).getNombre();
-                                                            %>
-                                                            
-                                                            <option> <%=opcion %> </option>
-                                                            
-                                                            <%
-                                                                }
-                                                            %>
-  
-                                                        </select>
+                                                        <label>Gasto</label>
+                                                        <input type="text" class="form-control" name="nombre" placeholder="Nombre del gasto..." required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Cantidad</label>
-                                                        <input class="form-control" name="cantidad" placeholder="Cantidad..." required>
+                                                        <label>Monto</label>
+                                                        <input class="form-control" name="monto" placeholder="Monto..." required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success">Registrar</button>

@@ -164,7 +164,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Producto</label>
-                                                        <select class="form-control" name="producto">
+                                                        <select class="form-control" name="producto" required>
                                                             
                                                             <% 
                                                                 ProductoDAO prodao = new ProductoDAO();
