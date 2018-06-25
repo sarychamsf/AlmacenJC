@@ -12,6 +12,8 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.Locale"%>
+<%@page import="modelo.Producto"%>
+<%@page import="dao.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -181,24 +183,24 @@
 
                                         <% 
                                             VentaDAO compradao = new VentaDAO();
-                                            ArrayList<Venta> compras = compradao.getAllVentas();
+                                            ArrayList<Venta> ventas = compradao.getAllVentas();
                                                             
                                             Locale.setDefault(Locale.US);
                                             DecimalFormat num = new DecimalFormat("#,###.00");  
                                             
-                                            for(int i = 0; i<compras.size(); i++) {
+                                            for(int i = 0; i<ventas.size(); i++) {
                                                 
-                                                int idVenta = (compras.get(i)).getIdVenta();
+                                                int idVenta = (ventas.get(i)).getIdVenta();
                                                 
-                                                Date date = (compras.get(i)).getFecha(); 
+                                                Date date = (ventas.get(i)).getFecha(); 
                                                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                                 String fecha = df.format(date);
 
-                                                String nombre = (compras.get(i)).getNombre();
+                                                String nombre = (ventas.get(i)).getNombre();
                                                 
-                                                float cantidad = (compras.get(i)).getCantidad();
+                                                float cantidad = (ventas.get(i)).getCantidad();
                                                 String cantidads = num.format(cantidad);
-                                                float total = (compras.get(i)).getTotal();
+                                                float total = (ventas.get(i)).getTotal();
                                                 String totals = num.format(total);
 
                                         %>
@@ -219,6 +221,131 @@
                                     </tbody>
                                 </table>
                                 <!-- /.table-responsive -->
+
+                                <br>
+
+                                <div id="botones">
+                                    <button id="modificar" onclick="modificar()" class="btn btn-success">Modificar Venta</button>
+                                    <button id="eliminar" onclick="eliminar()" class="btn btn-success">Eliminar Venta</button>
+                                </div>
+
+                                <br>
+
+                                <!--Modificar-->
+
+                                <div id="seccionmod" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Modificar Venta:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="ModificarVenta" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Código de venta a modificar</label>
+
+                                                        <select class="form-control" name="opcion">
+
+                                                            <%  
+                                                                for(int i = 0; i<ventas.size(); i++) {
+                                                                    int opcion = (ventas.get(i)).getIdVenta();                                                                
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Fecha (*)</label>
+                                                        <input type="date" class="form-control" name="fecha" placeholder="Producto...">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Producto (*)</label>
+                                                        <select class="form-control" name="producto" required>
+
+                                                            <% 
+                                                                ProductoDAO prodao = new ProductoDAO();
+                                                                ArrayList<Producto> productos = prodao.getAllProductos();
+                                                            
+                                                                for(int i = 0; i<productos.size(); i++) {
+                                                                String opcion = (productos.get(i)).getNombre();
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Nueva Cantidad (*)</label>
+                                                        <input class="form-control" name="cantidad" placeholder="Nueva cantidad...">
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Modificar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--Eliminar-->
+
+                                <div id="seccionelim" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Eliminar Venta:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="EliminarVenta" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Código de venta a eliminar</label>
+
+                                                        <select class="form-control" name="opcion">
+
+                                                            <%  
+                                                                for(int i = 0; i<ventas.size(); i++) {
+                                                                    int opcion = (ventas.get(i)).getIdVenta();                                                                
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Eliminar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>                           
+
 
                             </div>
                             <!-- /.panel-body -->
@@ -254,11 +381,35 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTables-example').DataTable({
+                                                                responsive: true
+                                                            });
+                                                        });
+        </script>
+
+
+        <script>
+            function cancelar() {
+                //location.reload();
+                document.getElementById('seccionmod').style.display = 'none';
+                document.getElementById('seccionelim').style.display = 'none';
+                document.getElementById('botones').style.display = 'block';
+            }
+        </script>
+
+        <script>
+            function modificar() {
+                document.getElementById('seccionmod').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
+        </script>
+
+        <script>
+            function eliminar() {
+                document.getElementById('seccionelim').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
         </script>
 
     </body>

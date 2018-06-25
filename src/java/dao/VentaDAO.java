@@ -29,7 +29,7 @@ public class VentaDAO {
     public void addVenta(Venta venta) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("insert into ventas(nombre,fecha,cantidad,total) values (?,?,?,?)");
         preparedStatement.setString(1, venta.getNombre());
-        preparedStatement.setDate(2, (java.sql.Date)(venta.getFecha()));
+        preparedStatement.setDate(2, (java.sql.Date) (venta.getFecha()));
         preparedStatement.setFloat(3, venta.getCantidad());
         preparedStatement.setFloat(4, venta.getTotal());
         preparedStatement.executeUpdate();
@@ -61,11 +61,25 @@ public class VentaDAO {
     public void updateVenta(int opcion, Venta venta) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("update ventas set nombre=?,fecha=?,cantidad=?,total=?" + " where idVenta=?");
         preparedStatement.setString(1, venta.getNombre());
-        preparedStatement.setDate(2, (java.sql.Date)venta.getFecha());
+        preparedStatement.setDate(2, (java.sql.Date) venta.getFecha());
         preparedStatement.setFloat(3, venta.getCantidad());
         preparedStatement.setFloat(4, venta.getTotal());
         preparedStatement.setInt(5, opcion);
         preparedStatement.executeUpdate();
+    }
+
+    public Venta getVentaById(int idVenta) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from ventas where idVenta=" + "\"" + idVenta + "\"");
+        Venta venta = new Venta();
+        if (rs.next()) {
+            venta.setIdVenta(rs.getInt("idVenta"));
+            venta.setNombre(rs.getString("nombre"));
+            venta.setFecha(rs.getDate("fecha"));
+            venta.setCantidad(rs.getFloat("cantidad"));
+            venta.setTotal(rs.getFloat("total"));
+        }
+        return venta;
     }
 
 }
