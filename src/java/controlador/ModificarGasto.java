@@ -5,17 +5,23 @@
  */
 package controlador;
 
+import dao.GastoDAO;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Gasto;
 
 /**
  *
  * @author Sary
  */
-public class Login extends HttpServlet {
+public class ModificarGasto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,6 +65,28 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        try {
+
+            response.sendRedirect("vergastos.jsp");
+            processRequest(request, response);
+
+            int opcion = Integer.parseInt(request.getParameter("opcion"));
+            String fechaS = request.getParameter("fecha");
+            java.sql.Date fecha = (java.sql.Date.valueOf(fechaS));
+            String nombre = request.getParameter("nombre");
+            Float monto = Float.parseFloat(request.getParameter("monto"));
+
+            Gasto gasto = new Gasto(opcion, fecha, nombre, monto);
+            GastoDAO gastodao;
+
+            gastodao = new GastoDAO();
+            gastodao.updateGasto(opcion, gasto);
+
+        } catch (URISyntaxException | SQLException ex) {
+            Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**

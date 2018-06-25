@@ -5,7 +5,12 @@
  */
 package controlador;
 
+import dao.GastoDAO;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Sary
  */
-public class Login extends HttpServlet {
+public class EliminarGasto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,6 +64,23 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        try {
+
+            response.sendRedirect("vergastos.jsp");
+            processRequest(request, response);
+
+            int opcion = Integer.parseInt(request.getParameter("opcion"));
+
+            GastoDAO gastodao;
+
+            gastodao = new GastoDAO();
+            gastodao.deleteGasto(opcion);
+
+        } catch (URISyntaxException | SQLException ex) {
+            Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**

@@ -55,7 +55,7 @@ public class GastoDAO {
         preparedStatement.executeUpdate();
     }
 
-    public void updateCompra(int opcion, Gasto gasto) throws SQLException {
+    public void updateGasto(int opcion, Gasto gasto) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("update gastos set fecha=?,nombre=?,monto=?" + " where idGasto=?");
         preparedStatement.setDate(1, (java.sql.Date) gasto.getFecha());
         preparedStatement.setString(2, gasto.getNombre());

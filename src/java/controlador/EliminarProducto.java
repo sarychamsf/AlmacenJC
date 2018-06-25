@@ -7,7 +7,6 @@ package controlador;
 
 import dao.ProductoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;

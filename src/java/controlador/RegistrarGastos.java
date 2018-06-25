@@ -6,10 +6,7 @@
 package controlador;
 
 import dao.GastoDAO;
-import dao.ProductoDAO;
-import dao.StockDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -19,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Gasto;
-import modelo.Producto;
-import modelo.Stock;
 
 /**
  *

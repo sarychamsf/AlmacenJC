@@ -6,10 +6,8 @@
 package controlador;
 
 import dao.CompraDAO;
-import dao.ProductoDAO;
 import dao.StockDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;

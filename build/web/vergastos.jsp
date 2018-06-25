@@ -216,6 +216,117 @@
                                 </table>
                                 <!-- /.table-responsive -->
 
+
+                                <br>
+
+                                <div id="botones">
+                                    <button id="modificar" onclick="modificar()" class="btn btn-success">Modificar Gasto</button>
+                                    <button id="eliminar" onclick="eliminar()" class="btn btn-success">Eliminar Gasto</button>
+                                </div>
+
+                                <br>
+
+                                <!--Modificar-->
+
+                                <div id="seccionmod" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Modificar Gasto:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="ModificarGasto" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Código del gasto a modificar</label>
+
+                                                        <select class="form-control" name="opcion">
+
+                                                            <%  
+                                                                for(int i = 0; i<gastos.size(); i++) {
+                                                                    int opcion = (gastos.get(i)).getIdGasto();                                                                
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Fecha (*)</label>
+                                                        <input type="date" class="form-control" name="fecha" placeholder="Producto...">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Nombre (*)</label>
+                                                        <input class="form-control" name="nombre" placeholder="Nuevo Nombre...">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label> Nueva Monto (*)</label>
+                                                        <input class="form-control" name="monto" placeholder="Nuevo Monto...">
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Modificar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--Eliminar-->
+
+                                <div id="seccionelim" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Eliminar Gasto:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="EliminarGasto" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Código del gasto a eliminar</label>
+
+                                                        <select class="form-control" name="opcion">
+
+                                                            <%  
+                                                                for(int i = 0; i<gastos.size(); i++) {
+                                                                    int opcion = (gastos.get(i)).getIdGasto();                                                                
+                                                            %>
+
+                                                            <option> <%=opcion %> </option>
+
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Eliminar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>                           
+
+
+
                             </div>
                             <!-- /.panel-body -->
                         </div>
@@ -250,11 +361,34 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTables-example').DataTable({
+                                                                responsive: true
+                                                            });
+                                                        });
+        </script>
+
+        <script>
+            function cancelar() {
+                //location.reload();
+                document.getElementById('seccionmod').style.display = 'none';
+                document.getElementById('seccionelim').style.display = 'none';
+                document.getElementById('botones').style.display = 'block';
+            }
+        </script>
+
+        <script>
+            function modificar() {
+                document.getElementById('seccionmod').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
+        </script>
+
+        <script>
+            function eliminar() {
+                document.getElementById('seccionelim').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
         </script>
 
     </body>

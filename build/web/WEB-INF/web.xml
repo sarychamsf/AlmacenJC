@@ -56,6 +56,14 @@
         <servlet-name>EliminarVenta</servlet-name>
         <servlet-class>controlador.EliminarVenta</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarGasto</servlet-name>
+        <servlet-class>controlador.EliminarGasto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarGasto</servlet-name>
+        <servlet-class>controlador.ModificarGasto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarCompras</servlet-name>
         <url-pattern>/RegistrarCompras</url-pattern>
@@ -111,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>EliminarVenta</servlet-name>
         <url-pattern>/EliminarVenta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarGasto</servlet-name>
+        <url-pattern>/EliminarGasto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarGasto</servlet-name>
+        <url-pattern>/ModificarGasto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
