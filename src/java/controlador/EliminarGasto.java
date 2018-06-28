@@ -6,8 +6,10 @@
 package controlador;
 
 import dao.GastoDAO;
+import dao.RegistroDiarioDAO;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Gasto;
+import modelo.RegistroDiario;
 
 /**
  *
@@ -75,7 +79,20 @@ public class EliminarGasto extends HttpServlet {
             GastoDAO gastodao;
 
             gastodao = new GastoDAO();
+            Gasto gasto = gastodao.getGastoById(opcion);
+            float monto = gasto.getMonto();
+            Date fecha = gasto.getFecha();
             gastodao.deleteGasto(opcion);
+
+            // MODIFICAR REGISTRO SI SE ELIMINA.
+            RegistroDiarioDAO registrodao = new RegistroDiarioDAO();
+            RegistroDiario registro = registrodao.getRegistroById(fecha);
+
+            if (registro.getUtilidad() == (-monto)) {
+                registrodao.deleteRegistro(fecha);
+            } else {
+                registrodao.updateRegistro(fecha, new RegistroDiario(fecha, registro.getVentas(), registro.getGastos() - monto, registro.getUtilidad() + monto));
+            }
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);

@@ -6,10 +6,12 @@
 package controlador;
 
 import dao.ProductoDAO;
+import dao.RegistroDiarioDAO;
 import dao.StockDAO;
 import dao.VentaDAO;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,9 +79,6 @@ public class ModificarVenta extends HttpServlet {
 
             int opcion = Integer.parseInt(request.getParameter("opcion"));
 
-            String fechaS = request.getParameter("fecha");
-            java.sql.Date fecha = (java.sql.Date.valueOf(fechaS));
-
             String nombre = request.getParameter("producto");
             Float cantidadNueva = Float.parseFloat(request.getParameter("cantidad"));
 
@@ -88,8 +87,8 @@ public class ModificarVenta extends HttpServlet {
             float total = (producto.getPrecio()) * cantidadNueva;
 
             VentaDAO ventadao = new VentaDAO();
-            Venta venta = new Venta(nombre, fecha, cantidadNueva, total);
             Venta ventaAnterior = ventadao.getVentaById(opcion);
+            Venta venta = new Venta(nombre, ventaAnterior.getFecha(), cantidadNueva, total);
             float vv = ventaAnterior.getCantidad();
 
             ventadao.updateVenta(opcion, venta);
@@ -105,6 +104,18 @@ public class ModificarVenta extends HttpServlet {
 
             Stock stockNuevo = new Stock(nombre, in);
             stockdao.updateStock(nombre, stockNuevo);
+            
+            float ventav = ventaAnterior.getTotal();
+            Date fecha = ventaAnterior.getFecha();
+
+            // MODIFICAR REGISTRO DIARIO: restar y actualizar.
+            RegistroDiarioDAO registrodao = new RegistroDiarioDAO();
+            modelo.RegistroDiario registro = registrodao.getRegistroById(fecha);
+
+            float diff = registro.getVentas() - ventav;
+            float nuevoval = diff+total;
+            modelo.RegistroDiario registron = new modelo.RegistroDiario(fecha, nuevoval, registro.getGastos(), nuevoval-(registro.getGastos()));
+            registrodao.updateRegistro(fecha, registron);
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);

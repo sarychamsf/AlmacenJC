@@ -6,6 +6,7 @@
 package controlador;
 
 import dao.ProductoDAO;
+import dao.RegistroDiarioDAO;
 import dao.StockDAO;
 import dao.VentaDAO;
 import java.io.IOException;
@@ -100,6 +101,18 @@ public class RegistrarVentas extends HttpServlet {
             stock.setCantidad(cantidadNueva);
 
             stockdao.updateStock(producto, stock);
+
+            // ACTUALIZAR REGISTRO DIARIO.
+            RegistroDiarioDAO registrodao = new RegistroDiarioDAO();
+            modelo.RegistroDiario registro = registrodao.getRegistroById(fecha);
+
+            if (registro.getFecha() == null) {
+                // SI LA FECHA NO EXISTE EN EL REGISTRO DIARIO, CREARLA.
+                registrodao.addRegistro(new modelo.RegistroDiario(fecha, total, 0, total));
+            } else {
+                // SI LA FECHA YA EXISTE EN EL REGISTRO DIARIO, MODIFICAR VENTA Y UTILIDAD.
+                registrodao.updateRegistro(fecha, new modelo.RegistroDiario(fecha, registro.getVentas() + total, registro.getGastos(), registro.getUtilidad() + total));
+            }
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);

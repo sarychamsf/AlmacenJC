@@ -64,4 +64,17 @@ public class GastoDAO {
         preparedStatement.executeUpdate();
     }
 
+    public Gasto getGastoById(int idGasto) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from gastos where idGasto=" + "\"" + idGasto + "\"");
+        Gasto gasto = new Gasto();
+        if (rs.next()) {
+            gasto.setIdGasto(rs.getInt("idGasto"));
+            gasto.setFecha(rs.getDate("fecha"));
+            gasto.setNombre(rs.getString("nombre"));
+            gasto.setMonto(rs.getFloat("monto"));
+        }
+        return gasto;
+    }
+
 }

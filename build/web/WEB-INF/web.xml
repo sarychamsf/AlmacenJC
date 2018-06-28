@@ -64,6 +64,10 @@
         <servlet-name>ModificarGasto</servlet-name>
         <servlet-class>controlador.ModificarGasto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistroDiario</servlet-name>
+        <servlet-class>controlador.RegistroDiario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarCompras</servlet-name>
         <url-pattern>/RegistrarCompras</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>ModificarGasto</servlet-name>
         <url-pattern>/ModificarGasto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistroDiario</servlet-name>
+        <url-pattern>/RegistroDiario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

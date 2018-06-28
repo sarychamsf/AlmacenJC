@@ -92,6 +92,8 @@ public class RegistrarCompras extends HttpServlet {
             compraDAO = new CompraDAO();
             compraDAO.addCompra(compra);
 
+            // ACTUALIZAR INVENTARIO.
+            
             StockDAO stockdao = new StockDAO();
             Stock stock = stockdao.getStockByProductName(producto);
 
@@ -99,7 +101,7 @@ public class RegistrarCompras extends HttpServlet {
             float cantidadNueva = cantidad + cantidadActual;
             stock.setCantidad(cantidadNueva);
 
-            stockdao.updateStock(producto, stock);
+            stockdao.updateStock(producto, stock);            
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);

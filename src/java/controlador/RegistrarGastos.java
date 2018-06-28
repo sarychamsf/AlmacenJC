@@ -6,6 +6,8 @@
 package controlador;
 
 import dao.GastoDAO;
+import dao.RegistroDiarioDAO;
+import modelo.RegistroDiario;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -68,6 +70,7 @@ public class RegistrarGastos extends HttpServlet {
 
         try {
 
+            // CREAR GASTO Y AGREGAR A BASE DE DATOS.
             response.sendRedirect("registrargastos.jsp");
             processRequest(request, response);
 
@@ -83,6 +86,18 @@ public class RegistrarGastos extends HttpServlet {
 
             gastoDAO = new GastoDAO();
             gastoDAO.addGasto(gasto);
+
+            // ACTUALIZAR REGISTRO DIARIO.
+            RegistroDiarioDAO registrodao = new RegistroDiarioDAO();
+            RegistroDiario registro = registrodao.getRegistroById(fecha);
+
+            if (registro.getFecha() == null) {
+                // SI LA FECHA NO EXISTE EN EL REGISTRO DIARIO, CREARLA.
+                registrodao.addRegistro(new RegistroDiario(fecha, 0, monto, ((registro.getUtilidad()) - monto)));
+            } else {
+                // SI LA FECHA YA EXISTE EN EL REGISTRO DIARIO, MODIFICAR GASTO Y UTILIDAD.
+                registrodao.updateRegistro(fecha, new RegistroDiario(fecha, registro.getVentas(), (registro.getGastos() + monto), (registro.getVentas()-(registro.getGastos() + monto))));
+            }
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);

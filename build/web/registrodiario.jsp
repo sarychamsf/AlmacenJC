@@ -4,8 +4,8 @@
     Author     : Sary
 --%>
 
-<%@page import="dao.VentaDAO"%>
-<%@page import="modelo.Venta"%>
+<%@page import="dao.RegistroDiarioDAO"%>
+<%@page import="modelo.RegistroDiario"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
@@ -168,40 +168,35 @@
                                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>Código Venta</th>
                                             <th>Fecha</th>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio Total</th>
+                                            <th>Ventas</th>
+                                            <th>Gastos</th>
+                                            <th>Utilidad</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <% 
-                                            VentaDAO compradao = new VentaDAO();
-                                            ArrayList<Venta> compras = compradao.getAllVentas();
+                                            RegistroDiarioDAO registrodao = new RegistroDiarioDAO();
+                                            ArrayList<RegistroDiario> registros = registrodao.getAllRegistros();
                                                             
-                                            for(int i = 0; i<compras.size(); i++) {
+                                            for(int i = 0; i<registros.size(); i++) {
                                                 
-                                                int idVenta = (compras.get(i)).getIdVenta();
-                                                
-                                                Date date = (compras.get(i)).getFecha(); 
+                                                Date date = (registros.get(i)).getFecha(); 
                                                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
                                                 String fecha = df.format(date);
-
-                                                String nombre = (compras.get(i)).getNombre();
                                                 
-                                                float cantidad = (compras.get(i)).getCantidad();
-                                                float total = (compras.get(i)).getTotal();                                            
+                                                float ventas = (registros.get(i)).getVentas();
+                                                float gastos = (registros.get(i)).getGastos();                                            
+                                                float utilidad = (registros.get(i)).getUtilidad();                                            
 
                                         %>
 
                                         <tr class="odd gradeA">
-                                            <td><%=idVenta%></td>
                                             <td><%=fecha%></td>
-                                            <td><%=nombre%></td>
-                                            <td><%=cantidad%></td>                                        
-                                            <td><%=total%></td>                                        
+                                            <td><%=ventas%></td>
+                                            <td><%=gastos%></td>                                        
+                                            <td><%=utilidad%></td>                                        
                                         </tr>
 
 

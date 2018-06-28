@@ -258,11 +258,6 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label> Fecha (*)</label>
-                                                        <input type="date" class="form-control" name="fecha" placeholder="Producto...">
-                                                    </div>
-
-                                                    <div class="form-group">
                                                         <label>Nombre (*)</label>
                                                         <input class="form-control" name="nombre" placeholder="Nuevo Nombre...">
                                                     </div>
