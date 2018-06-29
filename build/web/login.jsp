@@ -39,6 +39,14 @@
 
     </head>
 
+    <%
+        HttpSession misession = request.getSession();
+
+        if (misession.getAttribute("usuario") != null) {
+            response.sendRedirect("inventario.jsp");
+        }
+    %>
+
     <body>
 
         <div class="container" style="margin-top: 7%;">

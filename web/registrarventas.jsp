@@ -42,6 +42,14 @@
 
     </head>
 
+    <%
+        HttpSession misession = request.getSession();
+
+        if (misession.getAttribute("usuario") == null) {
+            response.sendRedirect("login.jsp");
+        }
+    %>
+
     <body>
 
         <div id="wrapper">
@@ -65,8 +73,13 @@
                             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="login.jsp"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión </a>
-                            </li>
+                            <center>
+                                <li>
+                                    <form method="POST" action="Logout">
+                                        <button type="submit" name="logout" value="logout" class="btn btn-default" style="border: none;"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión </button>
+                                    </form>
+                                </li>
+                            </center>
                         </ul>
                         <!-- /.dropdown-user -->
                     </li>
@@ -165,7 +178,7 @@
                                                     <div class="form-group">
                                                         <label>Producto</label>
                                                         <select class="form-control" name="producto" required>
-                                                            
+
                                                             <% 
                                                                 ProductoDAO prodao = new ProductoDAO();
                                                                 ArrayList<Producto> productos = prodao.getAllProductos();
@@ -173,13 +186,13 @@
                                                                 for(int i = 0; i<productos.size(); i++) {
                                                                 String opcion = (productos.get(i)).getNombre();
                                                             %>
-                                                            
+
                                                             <option> <%=opcion %> </option>
-                                                            
+
                                                             <%
                                                                 }
                                                             %>
-  
+
                                                         </select>
                                                     </div>
                                                     <div class="form-group">

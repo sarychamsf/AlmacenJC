@@ -6,6 +6,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Sary
  */
-public class Login extends HttpServlet {
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,23 +61,12 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
         HttpSession sesion = request.getSession();
-        
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");
-        
-        System.out.println("Usuario: "+usuario+"\nClave: "+clave);
-        
-        if(usuario.equals("JCadmin") && clave.equals("Almacen2018.") && sesion.getAttribute("usuario") == null){
-            //si coincide usuario y password y además no hay sesión iniciada.
-            sesion.setAttribute("usuario", usuario);
-            //redirijo a página con información de login exitoso.
-            response.sendRedirect("inventario.jsp");
-        }else{
-            response.sendRedirect("login.jsp");
-        }
-        
+
+        sesion.invalidate();
+        response.sendRedirect("login.jsp");
+
     }
 
     /**
