@@ -170,7 +170,7 @@
                                                 <form role="form" action="CrearProducto" method="POST">
                                                     <div class="form-group">
                                                         <label>Nombre del Producto</label>
-                                                        <input class="form-control" name="nombre" placeholder="Nombre..." required>
+                                                        <input class="form-control" name="nombre" placeholder="Nombre..." maxlength="100" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Precio del Producto</label>

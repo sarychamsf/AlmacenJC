@@ -193,7 +193,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Nuevo Nombre del Producto (*)</label>
-                                                        <input class="form-control" name="nombre" placeholder="Nuevo nombre..." required>
+                                                        <input class="form-control" name="nombre" placeholder="Nuevo nombre..." maxlength="100" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Nuevo Precio del Producto (*)</label>

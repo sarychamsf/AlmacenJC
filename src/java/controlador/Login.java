@@ -66,8 +66,6 @@ public class Login extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String clave = request.getParameter("clave");
         
-        System.out.println("Usuario: "+usuario+"\nClave: "+clave);
-        
         if(usuario.equals("JCadmin") && clave.equals("Almacen2018.") && sesion.getAttribute("usuario") == null){
             //si coincide usuario y password y además no hay sesión iniciada.
             sesion.setAttribute("usuario", usuario);

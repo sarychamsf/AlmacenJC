@@ -257,7 +257,7 @@
                                                     <div class="form-group">
                                                         <label>Código de compra a eliminar</label>
 
-                                                        <select class="form-control" name="opcion">
+                                                        <select class="form-control" name="opcion" required>
 
                                                             <%  
                                                                 for(int i = 0; i<compras.size(); i++) {

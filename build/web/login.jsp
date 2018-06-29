@@ -60,10 +60,10 @@
                             <form action="Login" method="POST">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Usuario" name="usuario" type="text" autofocus>
+                                        <input class="form-control" placeholder="Usuario" name="usuario" type="text" autofocus required>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Contraseña" name="clave" type="password">
+                                        <input class="form-control" placeholder="Contraseña" name="clave" type="password" required>
                                     </div>
                                     <input type="submit" value="Iniciar Sesión" class="btn btn-lg btn-success btn-block" >
                                 </fieldset>

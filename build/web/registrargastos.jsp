@@ -177,7 +177,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Gasto</label>
-                                                        <input type="text" class="form-control" name="nombre" placeholder="Nombre del gasto..." required>
+                                                        <input type="text" class="form-control" name="nombre" placeholder="Nombre del gasto..." maxlength="100" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Monto</label>

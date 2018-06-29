@@ -246,7 +246,7 @@
                                                 <form role="form" action="Inventario" method="POST">
                                                     <div class="form-group">
                                                         <label>Producto a Modificar</label>
-                                                        <select class="form-control" name="opcion">
+                                                        <select class="form-control" name="opcion" required>
 
                                                             <% 
                                                                 ProductoDAO prodao = new ProductoDAO();
@@ -268,7 +268,7 @@
 
                                                     <div class="form-group">
                                                         <label> Nueva Cantidad</label>
-                                                        <input class="form-control" name="cantidad" placeholder="Nueva cantidad...">
+                                                        <input class="form-control" name="cantidad" placeholder="Nueva cantidad..." required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success">Modificar</button>
