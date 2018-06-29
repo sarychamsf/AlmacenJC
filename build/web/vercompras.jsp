@@ -225,85 +225,11 @@
                                 <br>
 
                                 <div id="botones">
-                                    <button id="modificar" onclick="modificar()" class="btn btn-success">Modificar Compra</button>
                                     <button id="eliminar" onclick="eliminar()" class="btn btn-success">Eliminar Compra</button>
                                 </div>
 
                                 <br>
-
-                                <!--Modificar-->
-
-                                <div id="seccionmod" class="panel panel-default" style="display: none;">
-                                    <div class="panel-heading">
-                                        Modificar Compra:
-                                    </div>
-
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <form role="form" action="ModificarCompras" method="POST">
-                                                    <div class="form-group">
-                                                        <label>Código de compra a modificar</label>
-
-                                                        <select class="form-control" name="opcion">
-
-                                                            <%  
-                                                                for(int i = 0; i<compras.size(); i++) {
-                                                                    int opcion = (compras.get(i)).getIdCompra();                                                                
-                                                            %>
-
-                                                            <option> <%=opcion %> </option>
-
-                                                            <%
-                                                                }
-                                                            %>
-
-                                                        </select>
-
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label> Fecha (*)</label>
-                                                        <input type="date" class="form-control" name="fecha" placeholder="Producto...">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>Producto (*)</label>
-                                                        <select class="form-control" name="producto" required>
-
-                                                            <% 
-                                                                ProductoDAO prodao = new ProductoDAO();
-                                                                ArrayList<Producto> productos = prodao.getAllProductos();
-                                                            
-                                                                for(int i = 0; i<productos.size(); i++) {
-                                                                String opcion = (productos.get(i)).getNombre();
-                                                            %>
-
-                                                            <option> <%=opcion %> </option>
-
-                                                            <%
-                                                                }
-                                                            %>
-
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label> Nueva Cantidad (*)</label>
-                                                        <input class="form-control" name="cantidad" placeholder="Nueva cantidad...">
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-success">Modificar</button>
-                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
-
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
+                                
                                 <!--Eliminar-->
 
                                 <div id="seccionelim" class="panel panel-default" style="display: none;">
@@ -391,16 +317,8 @@
         <script>
             function cancelar() {
                 //location.reload();
-                document.getElementById('seccionmod').style.display = 'none';
                 document.getElementById('seccionelim').style.display = 'none';
                 document.getElementById('botones').style.display = 'block';
-            }
-        </script>
-
-        <script>
-            function modificar() {
-                document.getElementById('seccionmod').style.display = 'block';
-                document.getElementById('botones').style.display = 'none';
             }
         </script>
 

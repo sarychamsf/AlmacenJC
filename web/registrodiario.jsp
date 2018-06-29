@@ -10,6 +10,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Locale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -179,6 +181,9 @@
                                         <% 
                                             RegistroDiarioDAO registrodao = new RegistroDiarioDAO();
                                             ArrayList<RegistroDiario> registros = registrodao.getAllRegistros();
+                                            
+                                            Locale.setDefault(Locale.US);
+                                            DecimalFormat num = new DecimalFormat("#,###.00");                              
                                                             
                                             for(int i = 0; i<registros.size(); i++) {
                                                 
@@ -188,15 +193,19 @@
                                                 
                                                 float ventas = (registros.get(i)).getVentas();
                                                 float gastos = (registros.get(i)).getGastos();                                            
-                                                float utilidad = (registros.get(i)).getUtilidad();                                            
+                                                float utilidad = (registros.get(i)).getUtilidad();  
+
+                                                String ventass = num.format(ventas);
+                                                String gastoss = num.format(gastos);
+                                                String utilidads = num.format(utilidad);
 
                                         %>
 
                                         <tr class="odd gradeA">
                                             <td><%=fecha%></td>
-                                            <td><%=ventas%></td>
-                                            <td><%=gastos%></td>                                        
-                                            <td><%=utilidad%></td>                                        
+                                            <td><%=ventass%></td>
+                                            <td><%=gastoss%></td>                                        
+                                            <td><%=utilidads%></td>                                        
                                         </tr>
 
 

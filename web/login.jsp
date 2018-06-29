@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Bootstrap Admin Theme</title>
+        <title>Login</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,13 +49,13 @@
                             <h3 class="panel-title">Ingresar</h3>
                         </div>
                         <div class="panel-body">
-                            <form role="form">
+                            <form action="Login" method="POST">
                                 <fieldset>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Usuario" name="usuario" type="text" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Clave" name="clave" type="password" value="">
+                                        <input class="form-control" placeholder="Contraseña" name="clave" type="password">
                                     </div>
                                     <input type="submit" value="Iniciar Sesión" class="btn btn-lg btn-success btn-block" >
                                 </fieldset>
