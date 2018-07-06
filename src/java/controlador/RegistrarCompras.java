@@ -79,12 +79,7 @@ public class RegistrarCompras extends HttpServlet {
 
             String producto = request.getParameter("producto");
             float cantidad = Float.parseFloat(request.getParameter("cantidad"));
-
-            ProductoDAO productodao = new ProductoDAO();
-            Producto productoobj = productodao.getProductoById(producto);
-            Float precio = productoobj.getPrecio();
-
-            float total = precio * cantidad;
+            float total = Float.parseFloat(request.getParameter("total"));
 
             Compra compra = new Compra(producto, (java.sql.Date) fecha, cantidad, total);
             CompraDAO compraDAO;
@@ -93,7 +88,6 @@ public class RegistrarCompras extends HttpServlet {
             compraDAO.addCompra(compra);
 
             // ACTUALIZAR INVENTARIO.
-            
             StockDAO stockdao = new StockDAO();
             Stock stock = stockdao.getStockByProductName(producto);
 
@@ -101,7 +95,7 @@ public class RegistrarCompras extends HttpServlet {
             float cantidadNueva = cantidad + cantidadActual;
             stock.setCantidad(cantidadNueva);
 
-            stockdao.updateStock(producto, stock);            
+            stockdao.updateStock(producto, stock);
 
         } catch (URISyntaxException | SQLException ex) {
             Logger.getLogger(CrearProducto.class.getName()).log(Level.SEVERE, null, ex);
