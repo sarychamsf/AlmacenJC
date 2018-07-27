@@ -181,7 +181,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Monto</label>
-                                                        <input type="number" class="form-control" name="monto" placeholder="Monto..." required>
+                                                        <input class="form-control" name="monto" placeholder="Monto..." required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success">Registrar</button>

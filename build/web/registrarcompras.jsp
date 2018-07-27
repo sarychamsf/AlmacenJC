@@ -197,12 +197,12 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Cantidad</label>
-                                                        <input type="number" class="form-control" name="cantidad" placeholder="Cantidad..." required>
+                                                        <input class="form-control" name="cantidad" placeholder="Cantidad..." required>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label>Costo total de la compra:</label>
-                                                        <input type="number" class="form-control" name="total" placeholder="Costo..." required>
+                                                        <input class="form-control" name="total" placeholder="Costo..." required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success">Registrar</button>

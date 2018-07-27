@@ -201,7 +201,7 @@
                                             for(int i = 0; i<registros.size(); i++) {
                                                 
                                                 Date date = (registros.get(i)).getFecha(); 
-                                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                                 String fecha = df.format(date);
                                                 
                                                 float ventas = (registros.get(i)).getVentas();
@@ -229,6 +229,43 @@
                                     </tbody>
                                 </table>
                                 <!-- /.table-responsive -->
+
+                                <br>
+
+                                <div id="botones">
+                                    <button id="eliminar" onclick="eliminar()" class="btn btn-success">Eliminar Compra</button>
+                                </div>
+
+                                <br>
+
+                                <!--Eliminar-->
+
+                                <div id="seccionelim" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading">
+                                        Eliminar Registro:
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <form role="form" action="EliminarRegistroDiario" method="POST">
+                                                    <div class="form-group">
+                                                        <label>Fecha del registro a eliminar</label>
+
+                                                        <input type="date" class="form-control" name="fecha" value="" required>
+
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Eliminar</button>
+                                                    <button type="button" class="btn btn-danger" onclick="cancelar();">Cancelar</button>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>                           
 
                             </div>
                             <!-- /.panel-body -->
@@ -264,11 +301,26 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
+                                                        $(document).ready(function () {
+                                                            $('#dataTables-example').DataTable({
+                                                                responsive: true
+                                                            });
+                                                        });
+        </script>
+
+        <script>
+            function cancelar() {
+                //location.reload();
+                document.getElementById('seccionelim').style.display = 'none';
+                document.getElementById('botones').style.display = 'block';
+            }
+        </script>
+
+        <script>
+            function eliminar() {
+                document.getElementById('seccionelim').style.display = 'block';
+                document.getElementById('botones').style.display = 'none';
+            }
         </script>
 
     </body>

@@ -197,7 +197,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Nuevo Precio del Producto (*)</label>
-                                                        <input type="number" class="form-control" name="precio" placeholder="Nuevo precio..." required>
+                                                        <input class="form-control" name="precio" placeholder="Nuevo precio..." required>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success">Modificar</button>

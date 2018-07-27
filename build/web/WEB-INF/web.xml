@@ -72,6 +72,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>controlador.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarRegistroDiario</servlet-name>
+        <servlet-class>controlador.EliminarRegistroDiario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistrarCompras</servlet-name>
         <url-pattern>/RegistrarCompras</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarRegistroDiario</servlet-name>
+        <url-pattern>/EliminarRegistroDiario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
